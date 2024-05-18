@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+    <title>Main Window</title>
+</head>
+
+<body>
+    <h1>Main Window</h1>
+    <button id="openStopwatch">Open Stopwatch</button>
+    <button id="closeStopwatch"
+        disabled>Close All Stopwatches</button>
+
+    <script>
+        let windows = [];
+
+        document.getElementById('openStopwatch').addEventListener('click', function () {
+            const stopwatchName = `Stopwatch${windows.length + 1}`;
+            windows.push(window.open('stopwatch.html', stopwatchName, 'width=400,height=200'));
+            document.getElementById('closeStopwatch').disabled = false;
+        });
+
+        document.getElementById('closeStopwatch').addEventListener('click', function () {
+            windows.forEach(window => {
+                window.close();
+            });
+
+            document.getElementById('closeStopwatch').disabled = true;
+        });
+
+        window.onbeforeunload = function () {
+            windows.forEach(window => {
+                window.close();
+            });
+        };
+    </script>
+</body>
+
+</html>
